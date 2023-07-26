@@ -84,6 +84,8 @@ enum procstate { UNUSED, USED, SLEEPING, RUNNABLE, RUNNING, ZOMBIE };
 
 // Per-process state
 struct proc {
+  int trace_mask;    //trace系统调用参数
+
   struct spinlock lock;
 
   // p->lock must be held when using these:
