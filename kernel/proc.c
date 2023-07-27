@@ -5,6 +5,7 @@
 #include "spinlock.h"
 #include "proc.h"
 #include "defs.h"
+#include "sysinfo.h"
 
 struct cpu cpus[NCPU];
 
@@ -655,5 +656,18 @@ procdump(void)
       state = "???";
     printf("%d %s %s", p->pid, state, p->name);
     printf("\n");
+  }
+}
+
+void
+procnum(uint64 *dst)
+{
+  *dst = 0;
+  struct proc *p;
+  // 不需要锁进程 proc 结构，因为只需要读取进程列表，不需要写
+  for (p = proc; p < &proc[NPROC]; p++) {
+     // 不是 UNUSED 的进程位，就是已经分配的
+    if (p->state != UNUSED)
+      (*dst)++;
   }
 }
