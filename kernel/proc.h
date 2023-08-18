@@ -84,6 +84,8 @@ enum procstate { UNUSED, USED, SLEEPING, RUNNABLE, RUNNING, ZOMBIE };
 
 // Per-process state
 struct proc {
+  struct usyscall *usc;//usyscall结构体的指针
+
   struct spinlock lock;
 
   // p->lock must be held when using these:
